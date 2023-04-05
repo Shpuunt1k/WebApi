@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace WebApi.Entity.Models;
 
-public class CreateSectionViewModel
+public class Like
 {
     public int Id { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public int? CategoryId { get; set; }
+    public string Type { get; set; }
+    public int Film { get; set; }
+    public User Author { get; set; }
+    public int AuthorId { get; set; }
 
 }

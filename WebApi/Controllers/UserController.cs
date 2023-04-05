@@ -73,9 +73,4 @@ public class UserController : Controller
     {
         return _userService.GetUserById(id);
     }
-    [HttpPost("addProgress")]
-    public ProgressViewModel AddProgress(ProgressViewModel progress)
-    {
-        return _userService.AddProgress(progress);
-    }
 }

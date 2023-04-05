@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace WebApi.Entity.Viewmodels;
 
-public class ProgressViewModel
+public class GetLikeViewModel
 {
     public int Id { get; set; }
-    public int? Value { get; set; }
-    public int UserId { get; set; }
+    public string Type { get; set; }
+    public int Film { get; set; }
+    public int AuthorId { get; set; }
 }

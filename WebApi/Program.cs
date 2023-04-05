@@ -84,13 +84,8 @@ builder.Services.AddSignalR().AddJsonProtocol(options =>
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IJwtService, JwtService>();
-builder.Services.AddTransient<IPostService, PostService>();
-builder.Services.AddTransient<ICategoryService, CategoryService>();
-builder.Services.AddTransient<ISectionService, SectionService>();
-builder.Services.AddTransient<IThemeService, ThemeService>();
-builder.Services.AddTransient<IMessageService, MessageService>();
+builder.Services.AddTransient<ILikeService, LikeService>();
 builder.Services.AddTransient<IUserProvider, UserProvider>();
-builder.Services.AddTransient<IKeyService, KeyService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(

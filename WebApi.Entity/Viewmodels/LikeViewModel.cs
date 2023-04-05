@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApi.Entity.Models;
 
 namespace WebApi.Entity.Viewmodels;
-public class CreateCategoryViewModel
+
+public class LikeViewModel
 {
-    public int Id { get; set; }
-    public string Title { get; set; }
+    public List<GetLikeViewModel> Likes { get; set; }
 }
+

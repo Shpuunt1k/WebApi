@@ -8,7 +8,9 @@ using WebApi.Entity.Viewmodels;
 
 namespace WebApi.Business.Interfaces;
 
-public interface IKeyService
+public interface ILikeService
 {
-    public Key GetKey(); 
+    public LikeViewModel GetLikes(int skip, int take);
+    public SetLikeViewModel SetLike(SetLikeViewModel NewLike);
+    public bool DeleteLike(List<int> ids);
 }

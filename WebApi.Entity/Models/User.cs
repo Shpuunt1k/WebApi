@@ -10,17 +10,12 @@ public class User
     public int Id { get; set; }
     public string Login { get; set; }
     public string Password { get; set; }
-    public string Email { get; set; }
     [EnumDataType(typeof(UserRole))]
     [JsonConverter(typeof(StringEnumConverter))]
     public UserRole Role { get; set; }
-    public List<Message> Messages { get; set; }
-    public List<Theme> Themes { get; set; }
-    public Progress? Progress;
-    public int? ProgressId;
+    public List<Like> Likes { get; set; }
     public User()
     {
-        Messages = new List<Message>();
-        Themes = new List<Theme>();
+        Likes = new List<Like>();
     }
 }

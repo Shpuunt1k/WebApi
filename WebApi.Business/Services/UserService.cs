@@ -8,27 +8,23 @@ namespace WebApi.Business.Services;
 public class UserService : IUserService
 {
     private readonly IRepository<User> _userRepository;
-    private readonly IRepository<Progress> _progressRepository;
     private IUserProvider _userProvider { get; set; }
     private readonly int _userId;
-    public UserService(IRepository<User> userRepository, IUserProvider userProvider
-        , IRepository<Progress> progressRepository)
+    public UserService(IRepository<User> userRepository, IUserProvider userProvider)
     {
         _userRepository = userRepository;
         _userProvider = userProvider;
-        _progressRepository = progressRepository;
         _userId = _userProvider.GetUserId();
     }
 
     public UserViewModel GetUsers(int skip, int take)
     {
         var users = _userRepository.Include(
-            user => user.Messages, user => user.Themes).Skip(skip).Take(take);
+            user => user.Likes).Skip(skip).Take(take);
 
         var result = new UserViewModel
         {
             Users = new List<GetUserViewModel>(),
-            TotalCount = users.Count()
         };
 
         result.Users = users.Select(user => new GetUserViewModel
@@ -36,10 +32,7 @@ public class UserService : IUserService
             Id = user.Id,
             Login = user.Login,
             Password = user.Password,
-            Email = user.Email,
             Role = user.Role,
-            CountThemes = user.Themes.Count(),
-            CountMessages = user.Messages.Count()
         }).ToList();
 
         return result;
@@ -48,17 +41,13 @@ public class UserService : IUserService
     {
         var user = _userRepository.GetById(id);
         var users = _userRepository.Include(
-        user => user.Messages, user => user.Themes, user => user.Progress);
+        user => user.Likes);
         var result = new GetUserViewModel
         {
             Id = id,
             Login = user.Login,
             Password = user.Password,
-            Email = user.Email,
             Role = user.Role,
-            ProgressValue = user?.Progress?.Value,
-            CountMessages = user.Messages.Count(),
-            CountThemes = user.Themes.Count(),
         };
         return result;
 
@@ -69,7 +58,6 @@ public class UserService : IUserService
         {
             Login = CreatedUser.Login,
             Password = CreatedUser.Password,
-            Email = CreatedUser.Email,
         };
         var getuser = _userRepository.GetAll().ToList()
             .Any(usr => usr.Login == user.Login);
@@ -81,7 +69,6 @@ public class UserService : IUserService
                 Id = created.Id,
                 Login = created.Login,
                 Password = created.Password,
-                Email = created.Email
             };
         }
         else
@@ -99,7 +86,6 @@ public class UserService : IUserService
                            Id = user.Id,
                            Login = user.Login,
                            Password = user.Password,
-                           Email = user.Email
                        }).ToList();
         _userRepository.UpdateRange(updated);
         var updatedUsers = _userRepository.GetAll().ToList()
@@ -111,7 +97,6 @@ public class UserService : IUserService
                 Id = user.Id,
                 Login = user.Login,
                 Password = user.Password,
-                Email = user.Email
             }).ToList()
         };
     }
@@ -122,20 +107,5 @@ public class UserService : IUserService
     .Where(usr => ids.Any(id => id == usr.Id)).ToList();
 
         return _userRepository.DeleteRange(existingUsers);
-    }
-    public ProgressViewModel AddProgress(ProgressViewModel AddedProgress)
-    {
-        var progress = new Progress
-        {
-            Value = AddedProgress.Value,
-            UserId = AddedProgress.UserId,
-        };
-        var created = _progressRepository.Create(progress);
-        return new ProgressViewModel
-        {
-            Id = created.Id,
-            Value = created.Value,
-            UserId = created.UserId,
-        };
     }
 }

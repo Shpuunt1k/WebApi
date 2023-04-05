@@ -10,5 +10,4 @@ public interface IUserService
     public UserItemViewModel Create(UserItemViewModel CreatedUser);
     public UpdateUserViewModel UpdateRange(UpdateUserViewModel users);
     public bool DeleteRange(List<int> ids);
-    public ProgressViewModel AddProgress(ProgressViewModel AddedProgress);
 }
